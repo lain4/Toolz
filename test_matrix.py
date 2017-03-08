@@ -7,10 +7,9 @@ import random
 ip = "10.23.42.139:7890"
 
 client = opc.Client(ip)
-if client.can_connect():
-    print("connected")
-else:
-    print("can't connect")
+
+print("connected") if client.can_connect() else print("can't connect")
+
 x = random.randint(0, 7)
 while True:
 
