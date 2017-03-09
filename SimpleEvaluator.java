@@ -6,14 +6,14 @@ import java.util.regex.Matcher;
 abstract class SimpleEvaluator {
     
 //in progress - missing support for nested brackets
-    static final int evaluate(String s) {
+    static final int evaluate(String str) {
         Pattern p = Pattern.compile("(.*)(\\(.*\\))(.*)");
-        Matcher m = p.matcher(s);
+        Matcher m = p.matcher(str);
 
         return m.matches()? evaluate(m.group(1) +
-                                     evaluate(s.substring(s.lastIndexOf("(") + 1, s.indexOf(")", s.lastIndexOf("(")))) +
+                                     evaluate(str.substring(str.lastIndexOf("(") + 1, str.indexOf(")", str.lastIndexOf("(")))) +
                                      m.group(3)) :
-                            evalMathExp(s);
+                            evalMathExp(str);
     }
 
     private static final int evalMathExp(String str) {
