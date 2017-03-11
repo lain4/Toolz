@@ -1,25 +1,25 @@
 import java.util.Stack;
 import java.util.Arrays;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 abstract class SimpleEvaluator {
     
-//in progress - missing support for nested brackets
     static final int evaluate(String str) {
-        Pattern p = Pattern.compile("(.*)(\\(.*\\))(.*)");
-        Matcher m = p.matcher(str);
+        if(str.contains("(")) {
+            //index of highest bracket
+            final int bracketStart = str.lastIndexOf("(");
+            final int bracketEnd = str.indexOf(")", str.lastIndexOf("("));
 
-        return m.matches()? evaluate(m.group(1) +
-                                     evaluate(str.substring(str.lastIndexOf("(") + 1, str.indexOf(")", str.lastIndexOf("(")))) +
-                                     m.group(3)) :
-                            evalMathExp(str);
+            return evaluate(str.substring(0, bracketStart) +
+                        evalMathExp(str.substring(bracketStart + 1, bracketEnd)) +
+                        str.substring(bracketEnd));
+        } else
+            return evalMathExp(str);
     }
 
     private static final int evalMathExp(String str) {
         final Stack<Integer> stck = new Stack<>();
 
-        Arrays.stream(str.replaceAll("\\s", "")
+        Arrays.stream(str.replaceAll("\\s|\\(|\\)", "")
                       .split("(?=\\D)"))
               .forEach(e -> {if (e.matches("\\d+"))
                                 stck.push(Integer.parseInt(e));
@@ -41,13 +41,13 @@ abstract class SimpleEvaluator {
                 stck.push(-Integer.parseInt(str.substring(1)));
                 break;
             case '/':
-                stck.add(stck.pop() / Integer.parseInt(str.substring(1)));
+                stck.push(stck.pop() / Integer.parseInt(str.substring(1)));
                 break;
             case '*':
-                stck.add(stck.pop() * Integer.parseInt(str.substring(1)));
+                stck.push(stck.pop() * Integer.parseInt(str.substring(1)));
                 break;
             case '%':
-                stck.add(stck.pop() % Integer.parseInt(str.substring(1)));
+                stck.push(stck.pop() % Integer.parseInt(str.substring(1)));
                 break;
             default:
                 throw new IllegalArgumentException("Unknown operator: " + str.charAt(0));
