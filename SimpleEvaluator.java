@@ -10,8 +10,8 @@ abstract class SimpleEvaluator {
             final int bracketEnd = str.indexOf(")", str.lastIndexOf("("));
 
             return evaluate(str.substring(0, bracketStart) +
-                        evalMathExp(str.substring(bracketStart + 1, bracketEnd)) +
-                        str.substring(bracketEnd + 1));
+                            evalMathExp(str.substring(bracketStart + 1, bracketEnd)) +
+                            str.substring(bracketEnd + 1));
         } else
             return evalMathExp(str);
     }
@@ -28,29 +28,32 @@ abstract class SimpleEvaluator {
                             });
         
         return stck.stream()
-                  .mapToInt(Integer::intValue)
-                  .sum();
+                   .mapToInt(Integer::intValue)
+                   .sum();
     }
 
     private static void evalOperator(Stack<Integer> stck, String str) {
-        switch(str.charAt(0)) {
+        final char op = str.charAt(0);
+        final int num = Integer.parseInt(str.substring(1));
+        
+        switch(op) {
             case '+':
-                stck.push(Integer.parseInt(str.substring(1)));
+                stck.push(num);
                 break;
             case '-':
-                stck.push(-Integer.parseInt(str.substring(1)));
+                stck.push(-num);
                 break;
             case '/':
-                stck.push(stck.pop() / Integer.parseInt(str.substring(1)));
+                stck.push(stck.pop() / num);
                 break;
             case '*':
-                stck.push(stck.pop() * Integer.parseInt(str.substring(1)));
+                stck.push(stck.pop() * num);
                 break;
             case '%':
-                stck.push(stck.pop() % Integer.parseInt(str.substring(1)));
+                stck.push(stck.pop() % num);
                 break;
             default:
-                throw new IllegalArgumentException("Unknown operator: " + str.charAt(0));
+                throw new IllegalArgumentException("Unknown operator: " + op);
         }
     }
 
