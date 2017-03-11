@@ -11,7 +11,7 @@ abstract class SimpleEvaluator {
 
             return evaluate(str.substring(0, bracketStart) +
                         evalMathExp(str.substring(bracketStart + 1, bracketEnd)) +
-                        str.substring(bracketEnd));
+                        str.substring(bracketEnd + 1));
         } else
             return evalMathExp(str);
     }
@@ -19,7 +19,7 @@ abstract class SimpleEvaluator {
     private static final int evalMathExp(String str) {
         final Stack<Integer> stck = new Stack<>();
 
-        Arrays.stream(str.replaceAll("\\s|\\(|\\)", "")
+        Arrays.stream(str.replaceAll("\\s)", "")
                       .split("(?=\\D)"))
               .forEach(e -> {if (e.matches("\\d+"))
                                 stck.push(Integer.parseInt(e));
