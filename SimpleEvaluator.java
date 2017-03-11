@@ -19,7 +19,7 @@ abstract class SimpleEvaluator {
     private static final int evalMathExp(String str) {
         final Stack<Integer> stck = new Stack<>();
 
-        Arrays.stream(str.replaceAll("\\s)", "")
+        Arrays.stream(str.replaceAll("\\s", "")
                       .split("(?=\\D)"))
               .forEach(e -> {if (e.matches("\\d+"))
                                 stck.push(Integer.parseInt(e));
