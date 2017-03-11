@@ -7,7 +7,7 @@ abstract class SimpleEvaluator {
         if(str.contains("(")) {
             //index of highest bracket
             final int bracketStart = str.lastIndexOf("(");
-            final int bracketEnd = str.indexOf(")", str.lastIndexOf("("));
+            final int bracketEnd = str.indexOf(")", bracketStart);
 
             return evaluate(str.substring(0, bracketStart) +
                             evalMathExp(str.substring(bracketStart + 1, bracketEnd)) +
