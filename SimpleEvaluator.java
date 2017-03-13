@@ -21,7 +21,8 @@ abstract class SimpleEvaluator {
                         brCounter--;
                         break;
                     } else
-                        throw new IllegalArgumentException("Invalid expression! Bracket '" + c + "' @ Index: " + index);
+                        throw new IllegalArgumentException("Invalid expression! Bracket '" +
+                                                           c + "' @ Index: " + index);
                 case '+':
                 case '-':
                 case '*':
@@ -31,14 +32,16 @@ abstract class SimpleEvaluator {
                         opFlag = true;
                         break;
                     } else
-                        throw new IllegalArgumentException("Invalid expression! Operator '" + c + "' @ Index: " + index);
+                        throw new IllegalArgumentException("Invalid expression! Operator '" +
+                                                           c + "' @ Index: " + index);
                 default:
                     if(Character.isDigit(c)) {
                         opFlag = false;
                         break;
                     }
                     else
-                        throw new IllegalArgumentException("Invalid expression! Missing operand or unknown operator '" + c + "' @ Index: " + index);
+                        throw new IllegalArgumentException("Invalid expression! Missing operand or unknown operator '" +
+                                                           c + "' @ Index: " + index);
             }
         }
         return ((brCounter == 0) && !opFlag);
