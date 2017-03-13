@@ -1,1 +1,1 @@
-schreib was c:
+Einfacher Währungsrechner mit JavaFX, in Arbeit!
