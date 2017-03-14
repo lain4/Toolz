@@ -1,9 +1,9 @@
 package currencycalculator;
 
+import java.net.URL;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,31 +38,5 @@ final class Converter{
         }
         String f = sb.toString();
         return Float.parseFloat(f);
-    }
-    
-    public static ArrayList<String> comboList(){
-        String file = "src/currencyCalculator/bist.csv";
-        String line;
-        ArrayList<String> list = new ArrayList<>();
-    
-        try (BufferedReader br = new BufferedReader(new FileReader(file))){
-
-            while((line = br.readLine()) != null) {
-                list.add(line);
-            }   
-            br.close();         
-        }
-        catch(FileNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("Cannot open File" + file);
-        }
-        catch(IOException e){
-            e.printStackTrace();
-            System.out.println("Error reading File" + file);
-        }
-        System.out.println(list.size());
-        return list;
-    }
-    
-        
+    }           
 }
