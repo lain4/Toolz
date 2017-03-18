@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
+
+<AnchorPane fx:id="an" prefHeight="600" prefWidth="800" style="-fx-background-color:burlywood;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="beerchallenge.FXMLDocumentController">
+    <children>
+      <GridPane fx:id="grid" gridLinesVisible="true" layoutX="44.0" layoutY="86.0" prefHeight="482.0" prefWidth="544.0" style="-fx-background-color: brown;">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <HBox fx:id="h1" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox fx:id="v1" prefHeight="200.0" prefWidth="100.0" visible="false">
+                     <children>
+                        <TextField fx:id="t1" />
+                        <HBox prefHeight="68.0" prefWidth="152.0">
+                           <children>
+                              <TextField fx:id="t1n1" />
+                              <TextField fx:id="t1n2"/>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="t1n3"/>
+                              <TextField fx:id="t1n4"/>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox fx:id="h2" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <children>
+                  <VBox fx:id="v2" prefHeight="200.0" prefWidth="100.0" visible="false">
+                     <children>
+                        <TextField fx:id="t2" />
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="t2n1" />
+                              <TextField fx:id="t2n2"/>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="t2n3"/>
+                              <TextField fx:id="t2n4" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox fx:id="h3" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <children>
+                  <VBox fx:id="v3" prefHeight="200.0" prefWidth="100.0" visible="false">
+                     <children>
+                        <TextField fx:id="t3" />
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="t3n1"/>
+                              <TextField fx:id="t3n2"/>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="t3n3"/>
+                              <TextField fx:id="t3n4"/>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox fx:id="h4" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <VBox fx:id="v4" prefHeight="200.0" prefWidth="100.0" visible="false">
+                     <children>
+                        <TextField fx:id="t4"/>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="t4n1"/>
+                              <TextField fx:id="t4n2"/>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="t4n3"/>
+                              <TextField fx:id="t4n4"/>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox fx:id="h5" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+               <children>
+                  <VBox fx:id="v5" prefHeight="200.0" prefWidth="100.0" visible="false">
+                     <children>
+                        <TextField fx:id="t5"/>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="t5n1"/>
+                              <TextField fx:id="t5n2"/>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="t5n3"/>
+                              <TextField fx:id="t5n4"/>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox fx:id="h6" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <VBox fx:id="v6" prefHeight="200.0" prefWidth="100.0" visible="false">
+                     <children>
+                        <TextField fx:id="t6"/>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="t6n1"/>
+                              <TextField fx:id="t6n2"/>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="t6n3"/>
+                              <TextField fx:id="t6n4"/>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </GridPane>
+      <Pane layoutX="626.0" layoutY="85.0" prefHeight="482.0" prefWidth="140.0" style="-fx-background-color: brown;">
+         <children>
+            <Button fx:id="gameButton" onAction="#toGame" layoutX="44.0" layoutY="75.0" mnemonicParsing="false" text="Play" />
+            <Button layoutX="44.0" layoutY="401.0" mnemonicParsing="false" text="Button" />
+         </children>
+      </Pane>
+      <ComboBox fx:id="combi" onAction="#addTeam" layoutX="44.0" layoutY="33.0" prefWidth="150.0" promptText="Anzahl der Teams" visibleRowCount="6">
+          <items>
+              <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="1" />
+                  <String fx:value="2" />
+                  <String fx:value="3" />
+                  <String fx:value="4" />
+                  <String fx:value="5" />
+                  <String fx:value="6" />
+              </FXCollections>
+          </items>
+      </ComboBox>
+    </children>
+</AnchorPane>
