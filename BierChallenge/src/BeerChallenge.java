@@ -1,7 +1,9 @@
 
 package beerchallenge;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Random;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
@@ -16,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.scene.layout.BorderPane;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
@@ -26,6 +29,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 
 public class BeerChallenge extends Application {
 
@@ -33,7 +37,7 @@ public class BeerChallenge extends Application {
     Parent createContent(GameState state, Stage stage) {
 
         Group g = new Group();
-        BorderPane root = new BorderPane();
+        final BorderPane root = new BorderPane();
 
 
         //CENTER/GAME
@@ -92,10 +96,10 @@ public class BeerChallenge extends Application {
         rightBox.setStyle("-fx-background-color: royalblue");
         rightBox.setPadding(new Insets(10));
 
-        Button t1 = new Button("Red has scored!");
+        Button t1 = new Button("Red score+");
         t1.setOnAction(e -> sc1.set(sc1.getValue()+1));
         t1.setMinWidth(Region.USE_PREF_SIZE);
-        Button t2 = new Button("Blue has scored!");
+        Button t2 = new Button("Blue score+");
         t2.setOnAction(e -> sc2.set(sc2.getValue()+1));
         t2.setMinWidth(Region.USE_PREF_SIZE);
         Button sav = new Button("Save/Pause");
@@ -105,7 +109,7 @@ public class BeerChallenge extends Application {
         tSelect.setOnAction(e -> stage.setScene(new Scene(provMenu(state, stage))));
         tSelect.setPrefHeight(50);
         Button gSelect = new Button("Game selection");
-        gSelect.setOnAction(e -> root.setCenter(menu));
+        gSelect.setOnAction(e -> root.setCenter(teamMenu(state, stage)));
         gSelect.setPrefHeight(50);
         Button hlp = new Button("Help");
         hlp.setOnAction(e -> System.out.println("mii"));
@@ -131,6 +135,36 @@ public class BeerChallenge extends Application {
         return g;
     }
     
+    Parent teamMenu(GameState state, Stage stage) {
+            Group g = new Group();
+            HBox hbox = new HBox(10);
+            hbox.setPrefSize(100, 100);
+            hbox.setAlignment(Pos.CENTER);
+            for(int i = 0; i< state.getTeams().size();i++) {
+                Button btn = new Button(state.getTeams().get(i).getName());
+                btn.setMinWidth(Region.USE_PREF_SIZE);
+                final int index = i;
+                btn.setOnAction(e -> {
+                                                        if(state.getTeam1() == null)
+                                                            state.setTeam1(index);
+                                                        else if (state.getTeam2() == null)
+                                                            state.setTeam2(index);
+                                                        else
+                                                            state.setTeam1(index);
+                                                    });
+                hbox.getChildren().add(btn);
+            }
+            Button con = new Button("Continue");
+            con.setMinWidth(Region.USE_PREF_SIZE);
+            con.setOnAction(e -> {if(state.teamsChosen())
+                                                    stage.setScene(new Scene(createContent(state, stage)));
+                                                 
+            });
+            hbox.getChildren().add(con);
+            g.getChildren().add(hbox);
+            return g;
+    }
+    
     Parent provMenu(GameState state, Stage stage) {
         Group g = new Group();
         g.setAutoSizeChildren(true);
@@ -138,10 +172,11 @@ public class BeerChallenge extends Application {
         
         Label header = new Label("BIER-O-LYMPIxXx");
         header.setFont(Font.font("Comic Sans", FontWeight.EXTRA_BOLD, 40));
-        header.setAlignment(Pos.BASELINE_CENTER);
+        header.setTextAlignment(TextAlignment.CENTER);
         header.setTextFill(Color.GREENYELLOW);
         
         FlowPane inner = new FlowPane();
+        inner.getChildren().stream().forEach(System.out::println);
         inner.setPrefSize(800, 600);
         inner.setPrefWrapLength(170);     
         for(int i = 0; i < 6; i++) {
@@ -149,7 +184,7 @@ public class BeerChallenge extends Application {
             HBox player = new HBox();
             player.setStyle("-fx-background-color: aliceblue");
             player.setPadding(new Insets(30));
-            if (state.getTeams().size() > i) {
+            if (state.getTeams() != null && state.getTeams().size() > i) {
                 grup.getChildren().add(state.getTeams().get(i).getAvatar());
             }else {
             Label label = new Label("add Team");
@@ -167,9 +202,23 @@ public class BeerChallenge extends Application {
         VBox rightBox = new VBox(40);
         rightBox.setStyle("-fx-background-color: royalblue");
         rightBox.setPadding(new Insets(10));
-
+        
         Button sav = new Button("Game selection");
-        sav.setOnAction(e -> stage.setScene(new Scene(createContent(state, stage))));
+        sav.setOnAction(e -> { if(state.getTeams().size() == 2) {
+                                                    state.setTeam1(0);
+                                                    state.setTeam2(1);
+                                                    stage.setScene(new Scene(createContent(state, stage)));
+                                             } else if (state.teamsChosen())
+                                                    stage.setScene(new Scene(createContent(state, stage)));
+                                             else {
+                                                    stage.setScene(new Scene(teamMenu(state, stage)));
+                                                    /*Alert alert = new Alert(Alert.AlertType.ERROR);
+                                                    alert.setTitle("Error!");
+                                                    alert.setHeaderText("No(t enough) teams selected");
+                                                    alert.setContentText("Choose two teams to play!");
+                                                    alert.showAndWait();*/
+                                             }
+                                   });
         sav.setPrefHeight(50);
         Button tSelect = new Button("Team selection");
         tSelect.setOnAction(e -> stage.setScene(new Scene(provMenu(state, stage))));
@@ -193,35 +242,48 @@ public class BeerChallenge extends Application {
         VBox outer = new VBox();
         outer.setPrefSize(500, 500);
         outer.setAlignment(Pos.TOP_CENTER);
+        
         TextField text = new TextField();
+        text.setPromptText("Team name");
         text.setPrefSize(100, 50);
-        text.setAlignment(Pos.TOP_LEFT);
+        text.setFont(Font.font("Times New Roman", FontWeight.BOLD, 30));
+        text.setAlignment(Pos.CENTER);
         outer.getChildren().add(text);
         
-        g.getChildren().add(outer);
+        LinkedList<Player> mates = new LinkedList<>();
+        TextField[] matez = new TextField[5];
+        for(int i = 0; i<5;i++) {
+            HBox slot = new HBox(5);
+            slot.setPrefSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+            TextField btn = new TextField();
+            btn.setPromptText("add Teammember");
+            btn.setFont(Font.font("Times New Roman", FontWeight.SEMI_BOLD, 20));
+            btn.setAlignment(Pos.CENTER);
+            btn.setMinWidth(Region.USE_PREF_SIZE);
+            matez[i] = btn;
+            ImageView pic = new ImageView("images/game_" + new Random().nextInt(5) + ".png");
+            slot.getChildren().addAll(btn, pic);
+            outer.getChildren().add(slot);
+        }
+        Button submit = new Button("Confirm");
+        submit.setMinWidth(Region.USE_PREF_SIZE);
+        submit.setLayoutX(100);
+        submit.setOnMouseClicked(e -> { for(TextField tf : matez) {
+                                                                    mates.add(new Player(tf.getText()));
+                                                                    tf.clear();
+                                                              }
+                                                              state.addTeam(new Team(text.getText(), mates));
+                                                              text.clear();
+                                                    });
+        outer.getChildren().add(submit);
+        g.getChildren().addAll(outer);
         return g;
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        //Sample-Teams
-        LinkedList<Player> mates1 = new LinkedList<>();
-        mates1.add(new Player("A"));
-        mates1.add(new Player("B"));
-        mates1.add(new Player("C"));
-        mates1.add(new Player("D"));
-        LinkedList<Player> mates2 = new LinkedList<>();
-        mates2.add(new Player("E"));
-        mates2.add(new Player("F"));
-        mates2.add(new Player("G"));
-        mates2.add(new Player("H"));
-        Team team1 = new Team("Letrons", mates1);
-        Team team2 = new Team("Katzen", mates2);
-        LinkedList<Team> teams = new LinkedList<>();
-        teams.add(team1);
-        teams.add(team2);
-
-        GameState state = new GameState(teams, 0, 1);
+        
+        GameState state = new GameState();
         
         Scene menu = new Scene(provMenu(state, stage));
 
