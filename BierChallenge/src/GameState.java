@@ -1,19 +1,19 @@
 package beerchallenge;
 
 import java.util.LinkedList;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Parent;
 
 
 public class GameState {
-            private LinkedList<Team> teams;
+            private LinkedList<Team> teams = new LinkedList<>();
             private Team team1, team2;
                        
             private Game game;
             
             GameState() {
-                this.teams = null;
+                this.team1 = null;
+                this.team2 = null;
+                this.game = null;
             }
 
             GameState(LinkedList<Team> teams, int t1, int t2) {
@@ -27,10 +27,14 @@ public class GameState {
                 this.teams = teams;
                 this.team1 = teams.get(t1);
                 this.team2 = teams.get(t2);
-                game = null;
+                game = getGame(index);
                 game.setTurn(turn);
                 game.setScore1(sc1);
                 game.setScore2(sc2);  
+            }
+            
+            final boolean teamsChosen() {
+                return (team1 != null && team2 != null);
             }
             
             final LinkedList<Team> getTeams() {
@@ -55,15 +59,23 @@ public class GameState {
                 return getGame(index).showContent();
             }
             
-            public final Team getTeam1() {
+            final void setTeam1(int index) {
+                this.team1  = teams.get(index);
+            }
+            
+            final void setTeam2(int index) {
+                this.team2 = teams.get(index);
+            }
+            
+            final Team getTeam1() {
                 return team1;
             }
             
-            public final void addTeam(Team team) {
+            final void addTeam(Team team) {
                 teams.add(team);
             }
             
-            public final Team getTeam2() {
+            final Team getTeam2() {
                 return team2;
             }
 
