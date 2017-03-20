@@ -3,6 +3,7 @@ package beerchallenge;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -25,10 +26,7 @@ public class Player extends Entity{
             super(name, drunk, pong, klim, pHits, kHits);
             this.avatar = new ImageView("/images/cat.png");
         }
-
-        public final ImageView getPic() {
-            return avatar;
-        }
+        
 
         public final Group getAvatar() {
             Group g = new Group();
@@ -51,6 +49,5 @@ public class Player extends Entity{
 
             g.getChildren().add(root);
             return g;
-        }
-    
+        } 
 }
