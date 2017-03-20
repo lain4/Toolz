@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -24,14 +23,15 @@ public class Team {
         Team(String name, LinkedList<Player> team) {
             this.name = name;
             this.team = team;
-            this.allDrunk.bindBidirectional(team.get(0).beerDone);
+            for(Player p : team)
+                allDrunk.add(p.beerDone);
             avatar = genGrid();
             avatar.setAlignment(Pos.BASELINE_CENTER);
         }
         
         private GridPane genGrid() {
                 GridPane layout = new GridPane();
-                Label drunkel = new Label(allDrunk.intValue() + "");
+                Label drunkel = new Label();
                 drunkel.textProperty().bind(Bindings.convert(allDrunk));
                 drunkel.setTextFill(Color.CHOCOLATE);
                 drunkel.setFont(Font.font("Deja Vu Mono", FontWeight.BOLD, 40));
@@ -52,18 +52,10 @@ public class Team {
                 layout.setPrefHeight(300);
                 layout.setPrefWidth(100);
                 return layout;
-        }
-        
-        
-        //Sample method
-        public final GridPane getTest() {
-            GridPane test = new GridPane();
-            Rectangle rect = new Rectangle(20, 30, Color.CHOCOLATE);
-            Rectangle rect2 = new Rectangle(20, 30, Color.BURLYWOOD);
-            test.add(rect, 0, 1);
-            test.add(rect2, 0, 0);
-            test.setAlignment(Pos.CENTER);
-            return test;
+        }    
+       
+        public final void addPlayer(Player p) {
+            team.add(p);
         }
         
         public final LinkedList<Player> getMates() {
