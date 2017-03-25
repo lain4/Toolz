@@ -21,8 +21,7 @@ abstract class SimpleEvaluator {
                         brCounter--;
                         break;
                     } else
-                        throw new IllegalArgumentException("Invalid expression! Bracket '" +
-                                                           c + "' @ Index: " + index);
+                        throw new IllegalArgumentException("Invalid expression! Bracket '" + c + "' @ Index: " + index);
                 case '+':
                 case '-':
                 case '*':
@@ -32,23 +31,20 @@ abstract class SimpleEvaluator {
                         opFlag = true;
                         break;
                     } else
-                        throw new IllegalArgumentException("Invalid expression! Operator '" +
-                                                           c + "' @ Index: " + index);
+                        throw new IllegalArgumentException("Invalid expression! Operator '" + c + "' @ Index: " + index);
                 default:
                     if(Character.isDigit(c)) {
                         opFlag = false;
                         break;
-                    }
-                    else
-                        throw new IllegalArgumentException("Invalid expression! Missing operand or unknown operator '" +
-                                                           c + "' @ Index: " + index);
+                    } else
+                        throw new IllegalArgumentException("Invalid expression! Missing operand or unknown operator '" + c + "' @ Index: " + index);
             }
         }
         return ((brCounter == 0) && !opFlag);
     }
 
     static final int evaluate(String str) {
-        if(isValid(str)) {
+        if(isValid(str.replaceAll("\\s", ""))) {
             if(str.contains("(")) {
                 final int bracketStart = str.lastIndexOf("(");
                 final int bracketEnd = str.indexOf(")", str.lastIndexOf("("));
@@ -66,7 +62,7 @@ abstract class SimpleEvaluator {
         final Stack<Integer> stck = new Stack<Integer>();
 
         Arrays.stream(str.replaceAll("\\s", "")
-                      .split("(?=\\D)"))
+                        .split("(?=\\D)"))
               .forEach(e -> {if (e.matches("(\\+|\\-)?\\d+"))
                                 stck.push(Integer.parseInt(e));
                             else
@@ -84,7 +80,10 @@ abstract class SimpleEvaluator {
 
         switch(op) {
             case '/':
-                stck.push(stck.pop() / num);
+                if (num != 0)
+                    stck.push(stck.pop() / num);
+                else
+                    throw new ArithmeticException("Don't divide by zero");
                 break;
             case '*':
                 stck.push(stck.pop() * num);
@@ -93,7 +92,7 @@ abstract class SimpleEvaluator {
                 stck.push(stck.pop() % num);
                 break;
             default:
-                System.err.println("Unknown operator: " + op);
+                throw new UnsupportedOperationException("Unknown operator: " + op);
         }
     }
 }
