@@ -10,6 +10,8 @@ public class Caesar {
       {
           System.out.println("Enter a text: ");
           System.out.println(scramble(sc.nextLine(), askOffset()));
+      } catch (Exception e) {
+        e.printStackTrace();
       }
   }
 
