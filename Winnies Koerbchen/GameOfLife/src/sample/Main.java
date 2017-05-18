@@ -22,13 +22,10 @@ public class Main extends Application {
 
     private static Timeline loop;
     private static HashMap<String, Button> buttons = new HashMap<>();
-    private static SimpleBooleanProperty start = new SimpleBooleanProperty();
-    private static boolean _pause = false;
+    private static SimpleBooleanProperty start = new SimpleBooleanProperty();    private static boolean _pause = false;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-
-        //toDo
 
         initButtons();
         VBox root = new VBox();
@@ -43,13 +40,10 @@ public class Main extends Application {
 
         menu.getChildren().addAll(buttons.get("start"),buttons.get("reset"));
         root.getChildren().addAll(menu, grid);
-
-
-
-
-        //Grid-Effekt
+        
         Blend b = new Blend();
         b.setOpacity(0);
+        
         grid.effectProperty()
                 .bind(Bindings
                         .when(start)
@@ -57,8 +51,6 @@ public class Main extends Application {
                         .otherwise(b));
 
 
-
-        //Loop------------------------
         loop(grid);
         reset(grid);
 
@@ -84,7 +76,6 @@ public class Main extends Application {
             }));
             loop.setCycleCount(Animation.INDEFINITE);
             loop.play();
-            //pause in loop einbauen: nicht pause -> weil loop, oder noch nichts da ist : pause -> nicht pause, wenn start
 
         });
     }
@@ -104,6 +95,3 @@ public class Main extends Application {
         launch(args);
     }
 }
-
-//Bindings: Geschwindigkeit, Start und Reset(Effect), Bindings KlickFarbe, neue Bindings für UI-Erweiterung
-//Patterns erstellen,editieren,speichern und per Klick einfügen.
